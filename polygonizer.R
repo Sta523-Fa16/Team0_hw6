@@ -1,0 +1,33 @@
+polygonizer = function(x, quiet=TRUE)
+{
+  library(sf)
+  library(raster)
+
+  cmd = 'python'
+  pypath = Sys.which('gdal_polygonize.py')
+  if (!file.exists(pypath)) 
+        stop("Could not find gdal_polygonize.py.") 
+  
+  outshape = tempfile()
+  f = tempfile(fileext='.tif')
+  writeRaster(x, f)
+  rastpath = normalizePath(f)
+  
+  system2(
+    cmd, 
+    args=(
+      sprintf(
+        '"%s" "%s" %s -f "ESRI Shapefile" "%s.shp"', 
+        pypath, rastpath, ifelse(quiet, '-q ', ''), 
+        outshape
+      )
+    )
+  )
+  
+  shp = st_read(dirname(outshape), quiet=quiet)
+
+  #unlink(f)
+  #unlink(outshape,recursive = TRUE)
+  
+  shp
+}
