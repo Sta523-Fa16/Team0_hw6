@@ -27,9 +27,11 @@ ggplot(pluto_xy, aes(x=x,y=y)) +
 
 ## Merge data
 
+valid_precincts = c(1, 5, 6, 7, 9, 10, 13, 14, 17, 18, 19, 20, 22, 23, 24, 25, 26, 28, 30, 32, 33, 34)
+
 nyc_man = nyc %>%
   mutate(address = paste(House.Number, Street.Name)) %>%
-  filter(Violation.Precinct >= 1, Violation.Precinct <= 34) %>%
+  filter(Violation.Precinct %in% valid_precincts) %>%
   select(address, precinct = Violation.Precinct)
 
 # Cleanup
@@ -42,3 +44,5 @@ combined = inner_join(nyc_man, pluto_xy)
 ggplot(combined, aes(x=x,y=y,color=factor(precinct))) + 
   geom_point(size=0.1) +
   theme_bw()
+
+save(combined, file="precinct.Rdata")
