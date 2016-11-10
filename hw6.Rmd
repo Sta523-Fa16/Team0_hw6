@@ -5,13 +5,14 @@ output: html_notebook
 
 ## Setup
 
-```{r message=FALSE}
+```{r message=TRUE}
+library(raster) # load before dplyr to avoid select bs
+
 library(dplyr)
 library(ggplot2)
 library(sf)
 
 # New packages
-#library(raster)
 library(nnet)
 library(xgboost)
 
@@ -154,3 +155,10 @@ plot(r_mnom)
 plot(r_xg)
 ```
 
+
+## Polygonize
+
+```{r}
+source("polygonizer.R")
+polygonize()
+```
