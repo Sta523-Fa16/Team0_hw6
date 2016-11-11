@@ -45,4 +45,5 @@ build:
     - script:
       name: Show Leaderboard
       code: |
-        Rscript -e "source('https://raw.githubusercontent.com/Sta523-Fa16/Homework/master/hw6/leaderboard.R')"
+        curl -s "https://raw.githubusercontent.com/Sta523-Fa16/Homework/master/hw6/leaderboard.R" > leaderboard.R
+        Rscript leaderboard.R
