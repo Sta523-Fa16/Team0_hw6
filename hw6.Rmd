@@ -114,7 +114,7 @@ m = multinom(z ~ x*y+I(x^2)+I(y^2), data=data)
 
 (pred_mnom = predict(m, newdata=pred_locs))
 
-ggplot(cbind(pred_locs, pred=pred_mnom), aes(x=x,y=y,color=factor(pred))) + geom_point()
+#ggplot(cbind(pred_locs, pred=pred_mnom), aes(x=x,y=y,color=factor(pred))) + geom_point()
 ```
 
 ## Model 4 - xgboost
@@ -130,7 +130,7 @@ m = xgboost(data=x, label=y, nthead=4, nround=50, objective="multi:softmax", num
 
 pred_xg = predict(m, newdata=as.matrix(pred_locs))
 
-ggplot(cbind(pred_locs, pred=pred_xg), aes(x=x,y=y,color=factor(pred))) + geom_point()
+#ggplot(cbind(pred_locs, pred=pred_xg), aes(x=x,y=y,color=factor(pred))) + geom_point()
 ```
 
 
@@ -144,14 +144,7 @@ r_xg = r
 r_mglm[pred_cells] = as.integer(pred_mglm)
 r_mnom[pred_cells] = pred_mnom
 r_xg[pred_cells] = pred_xg
-```
 
-
-```{r}
-par(mfrow=c(1,3))
-
-plot(r_mglm)
-plot(r_mnom)
 plot(r_xg)
 ```
 
