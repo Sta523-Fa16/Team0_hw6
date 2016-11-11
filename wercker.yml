@@ -9,7 +9,8 @@ build:
         apt-get update
         apt-get install -y --no-install-recommends software-properties-common
         add-apt-repository ppa:ubuntugis/ubuntugis-unstable
-        apt-get install -y --no-install-recommends curl libgdal-dev libgeos++-dev libproj-dev
+        apt-get install -y --no-install-recommends curl libgdal-dev libgeos++-dev libproj-dev             
+
     - script:
       name: Install packages
       code: |
@@ -18,6 +19,7 @@ build:
     - script: 
       name: Get scores
       code: |
+        echo "Hello world"
         curl -s "$PP" > pp.Rdata
         curl -s "https://api.orchestrate.io/v0/Sta523-Fa16-HW6/Team0"  -u "$ORCH:" > Team0.json
         curl -s "https://api.orchestrate.io/v0/Sta523-Fa16-HW6/Team1"  -u "$ORCH:" > Team1.json
@@ -33,7 +35,8 @@ build:
     - script:
       name: Update scores
       code: |
-          Rscript -e "source('https://raw.githubusercontent.com/Sta523-Fa16/Homework/master/hw6/update_score.R')" $TEAM
+          curl -s "https://raw.githubusercontent.com/Sta523-Fa16/Homework/master/hw6/update_score.R" > update_score.R
+          Rscript update_score.R $TEAM
           curl -s "https://api.orchestrate.io/v0/Sta523-Fa16-HW6/$TEAM" \
             -XPUT \
             -H "Content-Type: application/json" \
@@ -42,4 +45,5 @@ build:
     - script:
       name: Show Leaderboard
       code: |
-        Rscript -e "source('https://raw.githubusercontent.com/Sta523-Fa16/Homework/master/hw6/leaderboard.R')"
+        curl -s "https://raw.githubusercontent.com/Sta523-Fa16/Homework/master/hw6/leaderboard.R" > leaderboard.R
+        Rscript leaderboard.R
