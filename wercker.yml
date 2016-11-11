@@ -19,6 +19,7 @@ build:
     - script: 
       name: Get scores
       code: |
+        echo "Hello world"
         curl -s "$PP" > pp.Rdata
         curl -s "https://api.orchestrate.io/v0/Sta523-Fa16-HW6/Team0"  -u "$ORCH:" > Team0.json
         curl -s "https://api.orchestrate.io/v0/Sta523-Fa16-HW6/Team1"  -u "$ORCH:" > Team1.json
