@@ -25,7 +25,7 @@ polygonizer = function(x, quiet=TRUE)
   )
   
   shp = st_transform(st_read(dirname(outshape), quiet=quiet), 4326)
-  names(shp) = c("Precincts","geometry")
+  names(shp) = c("Precinct","geometry")
 
   #unlink(f)
   #unlink(outshape,recursive = TRUE)
