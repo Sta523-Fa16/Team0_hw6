@@ -129,7 +129,7 @@ x = combined %>% select(x,y) %>% as.matrix()
 m = xgboost(data=x, label=y, nthead=4, nround=50, objective="multi:softmax", num_class=length(precincts))
 
 pred_xg = predict(m, newdata=as.matrix(pred_locs))
-
+pred_xg = precincts[pred_xg+1]
 #ggplot(cbind(pred_locs, pred=pred_xg), aes(x=x,y=y,color=factor(pred))) + geom_point()
 ```
 
@@ -143,7 +143,7 @@ r_xg = r
 
 r_mglm[pred_cells] = as.integer(pred_mglm)
 r_mnom[pred_cells] = pred_mnom
-r_xg[pred_cells] = pred_xg
+r_xg[pred_cells] = as.numeric(pred_xg)
 
 plot(r_xg)
 ```
@@ -155,6 +155,7 @@ plot(r_xg)
 source("polygonizer.R")
 p = polygonizer(r_xg)
 p = st_transform(p, 4326)
+plot(p)
 
 st_write(p,"precincts.json", "data", driver="GeoJSON", quiet=TRUE)
 ```
