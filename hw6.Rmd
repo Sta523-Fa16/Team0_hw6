@@ -33,7 +33,15 @@ library(raster)
 ext = st_bbox(manh) %>% .[c("xmin","xmax","ymin","ymax")] %>% extent()
 r = raster(ext, ncol=100, nrow=300)
 r = rasterize(as(manh,"Spatial"),r)
-plot(r)
+
+load("/data/nyc_parking/manh_bound.Rdata")
+extb = st_bbox(bound) %>% .[c("xmin","xmax","ymin","ymax")] %>% extent()
+rb = raster(extb, ncol=100, nrow=300)
+rb = rasterize(as(bound,"Spatial"),r)
+
+par(mfrow=c(1,2))
+plot(r,asp=0)
+plot(rb,asp=0)
 ```
 
 ### Get prediction locations
